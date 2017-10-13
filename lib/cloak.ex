@@ -147,7 +147,7 @@ defmodule Cloak do
     encrypt(plaintext, config[:tag])
   end
   def encrypt(plaintext, tag) do
-    {cipher, config} = Cloak.Config.cipher(tag)
+    {cipher, _config} = Cloak.Config.cipher(tag)
     key_tag = Cloak.Ciphers.Util.default_key(cipher)[:tag]
 
     tag <> cipher.encrypt(plaintext, key_tag)
