@@ -143,14 +143,14 @@ defmodule Cloak do
   @spec encrypt(term, String.t | nil) :: String.t
   def encrypt(plaintext, tag \\ nil)
   def encrypt(plaintext, nil) do
-    {cipher, config} = Cloak.Config.default_cipher()
+    {_cipher, config} = Cloak.Config.default_cipher()
     encrypt(plaintext, config[:tag])
   end
   def encrypt(plaintext, tag) do
     {cipher, config} = Cloak.Config.cipher(tag)
     key_tag = Cloak.Ciphers.Util.default_key(cipher)[:tag]
 
-    tag <> cipher(tag).encrypt(plaintext, key_tag)
+    tag <> cipher.encrypt(plaintext, key_tag)
   end
 
   @doc """
