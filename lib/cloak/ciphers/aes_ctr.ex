@@ -103,16 +103,12 @@ defmodule Cloak.AES.CTR do
   - `key_tag` - Optional. The tag of the key to use for encryption.
 
   ### Example
-
-      iex> encrypt("Hello") != "Hello"
-      true
-
-      iex> encrypt("Hello") != encrypt("Hello")
+      encrypt("Hello", <<1>>) != encrypt("Hello", <<1>>)
       true
   """
-  def encrypt(plaintext, key_tag \\ nil) do
+  def encrypt(plaintext, key_tag) do
     iv = :crypto.strong_rand_bytes(16)
-    key = Cloak.Ciphers.Util.config(__MODULE__, key_tag) || default_key()
+    key = Cloak.Ciphers.Util.config(__MODULE__, key_tag)
     state = :crypto.stream_init(:aes_ctr, Cloak.Ciphers.Util.key_value(key), iv)
 
     {_state, ciphertext} = :crypto.stream_encrypt(state, to_string(plaintext))
@@ -132,7 +128,7 @@ defmodule Cloak.AES.CTR do
 
   ### Examples
 
-      iex> encrypt("Hello") |> decrypt
+      encrypt("Hello", <<1>>) |> decrypt
       "Hello"
   """
   def decrypt(<<key_tag::binary-1, iv::binary-16, ciphertext::binary>> = _ciphertext) do

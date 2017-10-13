@@ -5,7 +5,7 @@ defmodule Cloak.AES.CTRTest do
   doctest Cloak.AES.CTR
 
   test ".encrypt can encrypt a value" do
-    assert encrypt("value") != "value"
+    assert encrypt("value", <<1>>) != "value"
   end
 
   test ".encrypt can encrypt a value with different keys" do
@@ -33,7 +33,7 @@ defmodule Cloak.AES.CTRTest do
   end
 
   test ".decrypt can decrypt a value" do
-    assert encrypt("value") |> decrypt == "value"
+    assert encrypt("value", <<1>>) |> decrypt == "value"
   end
 
   test ".decrypt can decrypt a value encrypted with a non-default key" do

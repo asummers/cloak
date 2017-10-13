@@ -64,7 +64,7 @@ defmodule Cloak.Cipher do
   Encrypt a value. Your function should include any information it will need for
   decryption with the output.
   """
-  @callback encrypt(any) :: String.t
+  @callback encrypt(any, Keyword.t) :: String.t
 
   @doc """
   Decrypt a value.
